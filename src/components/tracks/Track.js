@@ -5,7 +5,7 @@ const Track = props => {
   const { track } = props;
 
   return (
-    <div className="col-md-6">
+    <div className="col-md-6 fade-in" >
       <div className="card mb-4 shadow-sm">
         <div className="card-body">
           <h5>{track.artist_name}</h5>

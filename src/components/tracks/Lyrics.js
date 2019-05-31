@@ -19,7 +19,7 @@ export default class Lyrics extends Component {
       )
       .then(res => {
         this.setState({ lyrics: res.data.message.body.lyrics });
-        console.log(this.state.lyrics);
+        
 
         return axios.get(
           `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.get?track_id=${
@@ -30,7 +30,7 @@ export default class Lyrics extends Component {
       .then(res => {
         //this is the response from 2nd request
         this.setState({ track: res.data.message.body.track });
-        console.log(this.state.track, "track");
+        
       })
       .catch(err => console.log(err));
   }
@@ -57,28 +57,32 @@ export default class Lyrics extends Component {
               <span className="text-secondary"> {track.artist_name}</span>
             </h5>
             <div className="card-body">
-              <p className="card-text">{lyrics.lyrics_body}</p>
+              {lyrics.lyrics_body.split("\n").map(lyric => {
+                return <p className="card-text lyrics">{lyric}</p>
+              })}
             </div>
           </div>
 
-          <ul className="list-group mt-3">
+          <ul className="list-group mt-3 mb-5">
             <li className="list-group-item">
               <strong>Album:</strong> {track.album_name}
             </li>
             <li className="list-group-item">
               <strong>Genre:</strong>{" "}
-              {
+              {track.primary_genres.music_genre_list[0] ? (
                 track.primary_genres.music_genre_list[0].music_genre
                   .music_genre_name
-              }
+              ) : (
+                <span>No Genre Provided</span>
+              )}
             </li>
             <li className="list-group-item">
               <strong>Explicit:</strong> {track.explicit === 1 ? "Yes" : "No"}
             </li>
-            {/* <li className="list-group-item">
+            <li className="list-group-item">
               <strong>Release Data:</strong>{" "}
               <Moment format="MM/DD/YYYY">{track.updated_time}</Moment>
-            </li> */}
+            </li>
           </ul>
         </React.Fragment>
       );
