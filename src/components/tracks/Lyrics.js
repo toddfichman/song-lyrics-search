@@ -57,8 +57,9 @@ export default class Lyrics extends Component {
               <span className="text-secondary"> {track.artist_name}</span>
             </h5>
             <div className="card-body">
-              {lyrics.lyrics_body.split("\n").map(lyric => {
-                return <p className="card-text lyrics">{lyric}</p>
+              {lyrics.lyrics_body.split("\n").map((lyric, i) => {
+                
+                return <p key={i} className="card-text lyrics">{lyric}</p>
               })}
             </div>
           </div>
